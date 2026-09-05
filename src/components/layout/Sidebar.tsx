@@ -28,6 +28,7 @@ export default function Sidebar() {
   useEffect(() => {
     const match = pathname.match(/^\/project\/([^\/]+)/);
     if (match) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setProjectId(match[1]);
     } else {
       // If on dashboard or elsewhere, fetch the first project to use as default

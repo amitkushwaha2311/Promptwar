@@ -21,7 +21,7 @@ import {
 export default function SingleIdeaPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
-  const [idea, setIdea] = useState<any>(null);
+  const [idea, setIdea] = useState<Record<string, unknown> | null>(null);
   const [loading, setLoading] = useState(true);
   const [starting, setStarting] = useState(false);
 

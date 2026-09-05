@@ -44,7 +44,7 @@ import {
 
 export default function ProjectOverviewPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = React.use(params);
-  const [project, setProject] = useState<any>(null);
+  const [project, setProject] = useState<Record<string, unknown> | null>(null);
   useEffect(() => {
     fetch(`/api/projects/${id}`).then(r => r.json()).then(d => setProject(d.project));
   }, [id]);
@@ -385,7 +385,7 @@ export default function ProjectOverviewPage({ params }: { params: Promise<{ id: 
             <div className="flex gap-3">
               <div className="mt-0.5"><MessageSquare className="w-4 h-4 text-indigo-400" /></div>
               <div>
-                <p className="text-sm font-medium text-slate-200">Asked AI: "How to improve accuracy?"</p>
+                <p className="text-sm font-medium text-slate-200">Asked AI: &quot;How to improve accuracy?&quot;</p>
                 <p className="text-xs text-slate-500">8 hours ago</p>
               </div>
             </div>

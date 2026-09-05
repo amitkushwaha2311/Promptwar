@@ -22,9 +22,9 @@ import { GitHubAnalysisResult, GitHubRepoDetails } from '@/lib/github/analyzer';
 export default function GitHubAnalyzerPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const [repoUrl, setRepoUrl] = useState('https://github.com/alexrivera/ai-resume-analyzer');
-  const [project, setProject] = useState<any>(null);
+  const [project, setProject] = useState<Record<string, unknown> | null>(null);
   const [analysis, setAnalysis] = useState<GitHubAnalysisResult | null>(null);
-  const [repoDetails, setRepoDetails] = useState<any>(null);
+  const [repoDetails, setRepoDetails] = useState<Record<string, unknown> | null>(null);
   const [scanning, setScanning] = useState(false);
   const [error, setError] = useState('');
 

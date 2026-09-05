@@ -29,8 +29,11 @@ export default function SettingsPage() {
     const savedGemini = localStorage.getItem('projectpilot_gemini_key') || '';
     const savedOpenai = localStorage.getItem('projectpilot_openai_key') || '';
     const savedGithub = localStorage.getItem('projectpilot_github_token') || '';
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setGeminiKey(savedGemini);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpenaiKey(savedOpenai);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setGithubToken(savedGithub);
   }, []);
 

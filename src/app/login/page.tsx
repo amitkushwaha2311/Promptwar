@@ -145,7 +145,7 @@ export default function LoginPage() {
           </form>
 
           <div className="pt-2 text-center text-xs text-slate-400">
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="/register" className="font-semibold text-indigo-400 hover:text-indigo-300">
               Create student account
             </Link>

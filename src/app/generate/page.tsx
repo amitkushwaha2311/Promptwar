@@ -360,7 +360,7 @@ export default function GeneratePage() {
               </div>
               <h3 className="text-lg font-bold text-white">Ready to Generate Ideas</h3>
               <p className="text-xs text-slate-400 max-w-md mx-auto">
-                Click <strong>"Generate 6 Curated Ideas"</strong> on the left to receive customized project ideas with full problem statements, scope limits, and tech stacks.
+                Click <strong>&quot;Generate 6 Curated Ideas&quot;</strong> on the left to receive customized project ideas with full problem statements, scope limits, and tech stacks.
               </p>
               <button
                 onClick={() => handleGenerate()}
@@ -375,7 +375,7 @@ export default function GeneratePage() {
             <div className="space-y-4">
               <div className="flex items-center justify-between text-xs text-slate-400 px-1">
                 <span>Generated {ideas.length} Personalized Project Recommendations</span>
-                <span>Select to compare or click "Start Project"</span>
+                <span>Select to compare or click &quot;Start Project&quot;</span>
               </div>
 
               {ideas.map((idea, index) => {

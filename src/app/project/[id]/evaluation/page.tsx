@@ -29,7 +29,7 @@ interface EvaluationData {
 
 export default function EvaluationPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const [project, setProject] = useState<any>(null);
+  const [project, setProject] = useState<Record<string, unknown> | null>(null);
   const [evaluation, setEvaluation] = useState<EvaluationData | null>(null);
   const [evaluating, setEvaluating] = useState(false);
 

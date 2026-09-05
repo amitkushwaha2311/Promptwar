@@ -105,7 +105,7 @@ export default function RoadmapPage({ params }: { params: Promise<{ id: string }
           if (!prev) return prev;
           const updatedRoadmaps = prev.roadmaps.map((r) => ({
             ...r,
-            tasks: r.tasks.map((t) => (t.id === taskId ? { ...t, status: nextStatus as any } : t)),
+            tasks: r.tasks.map((t) => (t.id === taskId ? { ...t, status: nextStatus as 'TODO' | 'IN_PROGRESS' | 'COMPLETED' } : t)),
           }));
           return {
             ...prev,
