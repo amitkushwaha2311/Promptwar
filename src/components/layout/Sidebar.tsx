@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -22,26 +22,29 @@ import {
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [projectId, setProjectId] = useState<string | null>(null);
+  // Derive projectId synchronously from URL
+  const pathnameProjectId = useMemo(() => {
+    const match = pathname.match(/^\/project\/([^/]+)/);
+    return match ? match[1] : null;
+  }, [pathname]);
 
-  // Extract projectId from URL if present
+  const [fetchedProjectId, setFetchedProjectId] = useState<string | null>(null);
+
+  // Only fetch default project when not on a project route
   useEffect(() => {
-    const match = pathname.match(/^\/project\/([^\/]+)/);
-    if (match) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setProjectId(match[1]);
-    } else {
-      // If on dashboard or elsewhere, fetch the first project to use as default
+    if (!pathnameProjectId) {
       fetch('/api/projects')
         .then(res => res.json())
         .then(data => {
           if (data.projects && data.projects.length > 0) {
-            setProjectId(data.projects[0].id);
+            setFetchedProjectId(data.projects[0].id);
           }
         })
         .catch(e => console.error('Failed to fetch project for sidebar', e));
     }
-  }, [pathname]);
+  }, [pathnameProjectId]);
+
+  const projectId = pathnameProjectId ?? fetchedProjectId;
 
   const isLandingOrAuth = pathname === '/' || pathname === '/login' || pathname === '/register' || pathname === '/onboarding';
 

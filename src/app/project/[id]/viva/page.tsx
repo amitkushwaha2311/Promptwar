@@ -2,17 +2,11 @@
 
 import { use, useState, useEffect } from 'react';
 import {
-  BookOpen,
-  Award,
   Sparkles,
   Send,
   CheckCircle2,
   RefreshCw,
-  HelpCircle,
-  TrendingUp,
-  MessageSquare,
   ChevronRight,
-  Zap,
 } from 'lucide-react';
 
 function triggerCelebration() {
@@ -68,7 +62,7 @@ interface VivaSessionData {
 
 export default function VivaPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const [project, setProject] = useState<any>(null);
+  const [project, setProject] = useState<Record<string, unknown> | null>(null);
   const [session, setSession] = useState<VivaSessionData | null>(null);
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
   const [studentAnswer, setStudentAnswer] = useState('');
@@ -230,7 +224,7 @@ export default function VivaPage({ params }: { params: Promise<{ id: string }> }
               </div>
 
               <h2 className="text-base sm:text-lg font-bold text-white leading-relaxed">
-                "{currentQuestion.questionText}"
+              &quot;{currentQuestion.questionText}&quot;
               </h2>
 
               {/* Student Answer Input Box */}
@@ -307,7 +301,7 @@ export default function VivaPage({ params }: { params: Promise<{ id: string }> }
                     Model Exemplary Answer (Memorize for Viva):
                   </p>
                   <p className="text-slate-300 leading-relaxed bg-amber-950/20 p-3.5 rounded-xl border border-amber-800/30 italic">
-                    "{latestAnswer.improvedAnswer}"
+                    &quot;{latestAnswer.improvedAnswer}&quot;
                   </p>
                 </div>
 

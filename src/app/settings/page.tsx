@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   Settings,
@@ -17,25 +17,18 @@ import {
 
 export default function SettingsPage() {
   const router = useRouter();
-  const [geminiKey, setGeminiKey] = useState('');
-  const [openaiKey, setOpenaiKey] = useState('');
-  const [githubToken, setGithubToken] = useState('');
+  const [geminiKey, setGeminiKey] = useState(() =>
+    typeof window !== 'undefined' ? localStorage.getItem('projectpilot_gemini_key') || '' : ''
+  );
+  const [openaiKey, setOpenaiKey] = useState(() =>
+    typeof window !== 'undefined' ? localStorage.getItem('projectpilot_openai_key') || '' : ''
+  );
+  const [githubToken, setGithubToken] = useState(() =>
+    typeof window !== 'undefined' ? localStorage.getItem('projectpilot_github_token') || '' : ''
+  );
   const [saved, setSaved] = useState(false);
   const [seeding, setSeeding] = useState(false);
   const [seedSuccess, setSeedSuccess] = useState(false);
-
-  useEffect(() => {
-    // Load existing keys from localStorage if saved
-    const savedGemini = localStorage.getItem('projectpilot_gemini_key') || '';
-    const savedOpenai = localStorage.getItem('projectpilot_openai_key') || '';
-    const savedGithub = localStorage.getItem('projectpilot_github_token') || '';
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setGeminiKey(savedGemini);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setOpenaiKey(savedOpenai);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setGithubToken(savedGithub);
-  }, []);
 
   const handleSaveKeys = (e: React.FormEvent) => {
     e.preventDefault();
