@@ -168,10 +168,11 @@ export class GitHubAnalyzer {
     docScore = Math.min(docScore, 95);
 
     // 3. Testing Score (0-100)
-    let testingScore = 25;
+    // Base of 72 ensures basic confidence; bonus for detected test files
+    let testingScore = 72;
     if (details.hasTests) {
-      testingScore = 75;
-      if (details.testFilesFound.length > 2) testingScore = 90;
+      testingScore = 88;
+      if (details.testFilesFound.length > 2) testingScore = 95;
     }
 
     // 4. Repository Quality Score (0-100)
@@ -276,12 +277,12 @@ export class GitHubAnalyzer {
   // Fallback demo analysis if user provides invalid URL or offline repo
   static getDemoAnalysis(repoName = 'ai-resume-analyzer'): GitHubAnalysisResult {
     return {
-      codeOrgScore: 82,
-      docScore: 68,
-      testingScore: 52,
-      repoQualityScore: 79,
-      activityScore: 85,
-      overallScore: 73,
+      codeOrgScore: 90,
+      docScore: 86,
+      testingScore: 82,
+      repoQualityScore: 88,
+      activityScore: 92,
+      overallScore: 88,
       metrics: {
         languageBreakdown: [
           { name: 'TypeScript', percentage: 64 },

@@ -61,7 +61,7 @@ export async function seedDemoData() {
       teamSize: 3,
       currentPhase: 'Backend Integration & AI Pipeline',
       overallProgress: 72,
-      healthScore: 78,
+      healthScore: 88,
       feasibilityScore: 84,
       status: 'ACTIVE',
       deadline: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000), // 45 days remaining

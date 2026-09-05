@@ -288,8 +288,8 @@ export default function DashboardPage() {
           {[
             { label: 'Development', value: 72, color: '#06b6d4', trend: '+5%', up: true },
             { label: 'Documentation', value: 64, color: '#8b5cf6', trend: '-4%', up: false },
-            { label: 'Testing', value: 52, color: '#f59e0b', trend: '+12%', up: true },
-            { label: 'Code Quality', value: 82, color: '#3b82f6', trend: '+8%', up: true },
+            { label: 'Testing', value: 82, color: '#f59e0b', trend: '+30%', up: true },
+            { label: 'Code Quality', value: 88, color: '#3b82f6', trend: '+8%', up: true },
             { label: 'Innovation', value: 86, color: '#d946ef', trend: '+6%', up: true },
             { label: 'Deadline Health', value: 70, color: '#f43f5e', trend: '-3%', up: false },
           ].map((metric, i) => (

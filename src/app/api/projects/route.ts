@@ -51,7 +51,7 @@ export async function POST(req: Request) {
         teamSize: numTeam,
         currentPhase: 'Requirements & Design',
         overallProgress: 0,
-        healthScore: 78,
+        healthScore: 88,
         feasibilityScore: 84,
         deadline: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000), // ~90 days default
       },

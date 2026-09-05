@@ -123,10 +123,10 @@ export default function ProjectOverviewPage({ params }: { params: Promise<{ id: 
             <div className="relative w-32 h-32 flex items-center justify-center">
               <svg className="absolute inset-0 w-full h-full transform -rotate-90">
                 <circle cx="64" cy="64" r="56" stroke="#1E293B" strokeWidth="8" fill="none" />
-                <circle cx="64" cy="64" r="56" stroke="#06b6d4" strokeWidth="8" fill="none" strokeDasharray="351.8" strokeDashoffset={351.8 - (351.8 * 0.78)} className="drop-shadow-[0_0_10px_rgba(6,182,212,0.5)] transition-all duration-1000" strokeLinecap="round" />
+                <circle cx="64" cy="64" r="56" stroke="#06b6d4" strokeWidth="8" fill="none" strokeDasharray="351.8" strokeDashoffset={351.8 - (351.8 * 0.88)} className="drop-shadow-[0_0_10px_rgba(6,182,212,0.5)] transition-all duration-1000" strokeLinecap="round" />
               </svg>
               <div className="text-center">
-                <span className="text-4xl font-bold text-white">78</span>
+                <span className="text-4xl font-bold text-white">88</span>
                 <span className="block text-xs text-slate-500 mt-1">/100</span>
               </div>
             </div>
@@ -293,8 +293,8 @@ export default function ProjectOverviewPage({ params }: { params: Promise<{ id: 
           {[
             { label: 'Development', value: 72, color: '#06b6d4', trend: '+5%', up: true },
             { label: 'Documentation', value: 64, color: '#8b5cf6', trend: '-4%', up: false },
-            { label: 'Testing', value: 52, color: '#f59e0b', trend: '+12%', up: true },
-            { label: 'Code Quality', value: 82, color: '#3b82f6', trend: '+8%', up: true },
+            { label: 'Testing', value: 82, color: '#f59e0b', trend: '+30%', up: true },
+            { label: 'Code Quality', value: 88, color: '#3b82f6', trend: '+8%', up: true },
             { label: 'Innovation', value: 86, color: '#d946ef', trend: '+6%', up: true },
             { label: 'Deadline Health', value: 70, color: '#f43f5e', trend: '-3%', up: false },
           ].map((metric, i) => (

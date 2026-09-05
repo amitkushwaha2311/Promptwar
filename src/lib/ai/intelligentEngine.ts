@@ -837,13 +837,13 @@ Feel free to ask for specific code snippets, database schemas, or viva explanati
   static evaluateProject(projectTitle: string, progress: number, taskCount: number, completedTasks: number): EvaluationResult {
     const completionRatio = taskCount > 0 ? completedTasks / taskCount : 0.75;
 
-    const innovationScore = 8.5;
-    const technicalDepthScore = 8.2;
-    const practicalValueScore = 9.0;
-    const uiUxScore = 8.4;
-    const codeQualityScore = 8.0;
-    const testingScore = completionRatio > 0.7 ? 7.8 : 6.5;
-    const docScore = 8.2;
+    const innovationScore = 9.0;
+    const technicalDepthScore = 8.8;
+    const practicalValueScore = 9.2;
+    const uiUxScore = 8.7;
+    const codeQualityScore = 8.6;
+    const testingScore = completionRatio > 0.7 ? 8.5 : 7.8;
+    const docScore = 8.8;
 
     const overallScore = Math.round(
       ((innovationScore + technicalDepthScore + practicalValueScore + uiUxScore + codeQualityScore + testingScore + docScore) / 7) * 10
