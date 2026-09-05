@@ -1,0 +1,293 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String          @id @default(cuid())
+  email          String          @unique
+  passwordHash   String
+  name           String
+  avatarUrl      String?
+  role           String          @default("STUDENT")
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  studentProfile StudentProfile?
+  projects       Project[]
+  ideas          ProjectIdea[]
+  conversations  AIConversation[]
+  vivaSessions   VivaSession[]
+}
+
+model StudentProfile {
+  id                   String   @id @default(cuid())
+  userId               String   @unique
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  college              String   @default("University Institute of Technology")
+  degree               String   @default("B.Tech")
+  branch               String   @default("Computer Science")
+  graduationYear       Int      @default(2026)
+  programmingLanguages String   @default("[\"Python\", \"JavaScript\", \"C++\"]")
+  frameworks           String   @default("[\"React\", \"Next.js\", \"FastAPI\"]")
+  technicalSkills      String   @default("[\"Machine Learning\", \"REST APIs\", \"Git\", \"Docker\"]")
+  areasOfInterest      String   @default("[\"Artificial Intelligence\", \"Healthcare\", \"Web Development\"]")
+  experienceLevel      String   @default("Intermediate")
+  teamSize             Int      @default(3)
+  projectDuration      String   @default("4 months")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model Project {
+  id                 String              @id @default(cuid())
+  userId             String
+  user               User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title              String
+  shortDescription   String
+  problemStatement   String
+  proposedSolution   String
+  targetUsers        String
+  domain             String              @default("AI/ML")
+  projectType        String              @default("Web Application")
+  difficulty         String              @default("Intermediate")
+  estimatedDuration  String              @default("12 weeks")
+  teamSize           Int                 @default(3)
+  currentPhase       String              @default("Requirements & Design")
+  overallProgress    Int                 @default(0)
+  healthScore        Int                 @default(75)
+  feasibilityScore   Int                 @default(82)
+  status             String              @default("ACTIVE")
+  deadline           DateTime?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+
+  features           ProjectFeature[]
+  technologies       ProjectTechnology[]
+  roadmaps           ProjectRoadmap[]
+  conversations      AIConversation[]
+  githubRepositories GitHubRepository[]
+  evaluations        ProjectEvaluation[]
+  vivaSessions       VivaSession[]
+
+  @@index([userId])
+}
+
+model ProjectIdea {
+  id                     String   @id @default(cuid())
+  userId                 String
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId              String?
+  title                  String
+  shortDescription       String
+  problemStatement       String
+  proposedSolution       String
+  targetUsers            String
+  coreFeatures           String   // JSON string array
+  optionalFeatures       String   // JSON string array
+  recommendedTechStack   String   // JSON string array
+  estimatedDuration      String
+  difficulty             String
+  innovationScore        Int      @default(8)
+  practicalityScore      Int      @default(9)
+  resumeValue            Int      @default(9)
+  futureScope            String   // JSON string array
+  potentialChallenges    String   // JSON string array
+  createdAt              DateTime @default(now())
+
+  @@index([userId])
+}
+
+model ProjectFeature {
+  id          String   @id @default(cuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title       String
+  description String
+  category    String   // MVP, RECOMMENDED, ADVANCED, FUTURE_SCOPE
+  priority    String   @default("HIGH") // HIGH, MEDIUM, LOW
+  status      String   @default("TODO") // TODO, IN_PROGRESS, COMPLETED
+  createdAt   DateTime @default(now())
+
+  @@index([projectId])
+}
+
+model ProjectTechnology {
+  id             String   @id @default(cuid())
+  projectId      String
+  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  category       String   // FRONTEND, BACKEND, DATABASE, AUTH, AI_ML, APIS, STORAGE, DEPLOYMENT
+  name           String
+  whyRecommended String
+  advantages     String   // JSON array string
+  alternatives   String   // JSON array string
+  createdAt      DateTime @default(now())
+
+  @@index([projectId])
+}
+
+model ProjectRoadmap {
+  id            String        @id @default(cuid())
+  projectId     String
+  project       Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  title         String        @default("Master Development Roadmap")
+  durationWeeks Int           @default(12)
+  currentWeek   Int           @default(1)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  tasks         RoadmapTask[]
+
+  @@index([projectId])
+}
+
+model RoadmapTask {
+  id                 String         @id @default(cuid())
+  roadmapId          String
+  roadmap            ProjectRoadmap @relation(fields: [roadmapId], references: [id], onDelete: Cascade)
+  weekNumber         Int            @default(1)
+  title              String
+  description        String
+  subtasks           String         @default("[]") // JSON string array of {id, text, done}
+  estimatedHours     Int            @default(10)
+  dependencies       String         @default("[]") // JSON string array of task IDs
+  expectedOutput     String
+  completionCriteria String
+  status             String         @default("TODO") // TODO, IN_PROGRESS, COMPLETED
+  completedAt        DateTime?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  @@index([roadmapId])
+}
+
+model AIConversation {
+  id             String      @id @default(cuid())
+  projectId      String
+  project        Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title          String      @default("Mentorship Session")
+  contextSummary String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  messages       AIMessage[]
+
+  @@index([projectId])
+  @@index([userId])
+}
+
+model AIMessage {
+  id             String         @id @default(cuid())
+  conversationId String
+  conversation   AIConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  role           String         // user, assistant, system
+  content        String
+  metadata       String?        // JSON string (code snippets, references)
+  createdAt      DateTime       @default(now())
+
+  @@index([conversationId])
+}
+
+model GitHubRepository {
+  id            String           @id @default(cuid())
+  projectId     String
+  project       Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  repoUrl       String
+  owner         String
+  repoName      String
+  stars         Int              @default(0)
+  forks         Int              @default(0)
+  defaultBranch String           @default("main")
+  languages     String           @default("{}") // JSON string { "TypeScript": 65, "Python": 35 }
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  analyses      GitHubAnalysis[]
+
+  @@index([projectId])
+}
+
+model GitHubAnalysis {
+  id               String           @id @default(cuid())
+  repositoryId     String
+  repository       GitHubRepository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+  codeOrgScore     Int              @default(80)
+  docScore         Int              @default(70)
+  testingScore     Int              @default(50)
+  repoQualityScore Int              @default(75)
+  activityScore    Int              @default(85)
+  overallScore     Int              @default(72)
+  metricsJson      String           @default("{}") // Detailed breakdown metrics
+  improvementsJson String           @default("[]") // Prioritized improvements array
+  createdAt        DateTime         @default(now())
+
+  @@index([repositoryId])
+}
+
+model ProjectEvaluation {
+  id                   String   @id @default(cuid())
+  projectId            String
+  project              Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  innovationScore      Float    @default(8.5)
+  technicalDepthScore  Float    @default(8.0)
+  practicalValueScore  Float    @default(9.0)
+  uiUxScore            Float    @default(8.0)
+  codeQualityScore     Float    @default(7.5)
+  testingScore         Float    @default(6.5)
+  docScore             Float    @default(8.0)
+  overallScore         Float    @default(8.0)
+  whatIsGood           String   @default("[]") // JSON string array
+  whatNeedsImprovement String   @default("[]") // JSON string array
+  topImprovements      String   @default("[]") // JSON string array
+  createdAt            DateTime @default(now())
+
+  @@index([projectId])
+}
+
+model VivaSession {
+  id           String         @id @default(cuid())
+  projectId    String
+  project      Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title        String         @default("Mock Viva Examination")
+  overallScore Float?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  questions    VivaQuestion[]
+
+  @@index([projectId])
+  @@index([userId])
+}
+
+model VivaQuestion {
+  id           String       @id @default(cuid())
+  sessionId    String
+  session      VivaSession  @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  category     String       // BASIC, TECHNICAL, ARCHITECTURE, ADVANCED
+  questionText String
+  idealAnswer  String
+  orderIndex   Int          @default(0)
+  answers      VivaAnswer[]
+
+  @@index([sessionId])
+}
+
+model VivaAnswer {
+  id                 String       @id @default(cuid())
+  questionId         String
+  question           VivaQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  studentAnswer      String
+  understandingScore Float        @default(8.0)
+  accuracyScore      Float        @default(8.5)
+  completenessScore  Float        @default(7.5)
+  overallScore       Float        @default(8.0)
+  aiFeedback         String
+  improvedAnswer     String
+  createdAt          DateTime     @default(now())
+
+  @@index([questionId])
+}
