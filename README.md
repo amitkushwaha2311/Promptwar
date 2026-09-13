@@ -120,8 +120,7 @@ Final-year engineering students face a critical challenge: **they must conceive,
 # Run all tests
 npm test
 
-# Run with coverage report
-npm run test:coverage
+
 ```
 
 Test suites cover:
